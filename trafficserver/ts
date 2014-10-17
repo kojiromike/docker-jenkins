@@ -1,0 +1,11 @@
+#!/bin/sh
+
+while read ip host _; do
+    case "$host" in jenkins_*)
+        printf 'map         http://dj.jenkins/ http://%s:8080/\n' "$ip"
+        printf 'reverse_map http://%s:8080/    http://dj.jenkins/\n' "$ip"
+        break;;
+    esac
+done < /etc/hosts > /etc/trafficserver/remap.config
+
+exec /usr/bin/traffic_server

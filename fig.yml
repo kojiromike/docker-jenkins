@@ -1,0 +1,13 @@
+##
+# Fig instructions to orchestrate Docker containers
+# to run Jenkins, a reconfigurable HTTP reverse proxy
+# and subordinate Jenkins jobs
+jenkins:
+    build: jenkins
+web:
+    build: trafficserver
+    links:
+        - jenkins
+    ports:
+        - "80:8000"
+        - "443:8443"
